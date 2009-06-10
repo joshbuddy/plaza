@@ -1,0 +1,27 @@
+= Plaza
+
+== What's the point?
+
+This is a web framework meant for plugability. Thought about a new mapper you'd like to try out? A wacky controller? An interesting renderer? Maybe contextual template picking? It don't matter none. Plaza is meant to be a loose framework around which you can hang, swap and inject and part you'd like anywhere.
+
+=== Request Pipeline
+
+When a request is received it goes through the following steps.
+
+* Routing
+* Dispatching
+
+If at this point we have a response, we render it, otherwise we proceed with...
+
+* Template picking
+* Renderer picking
+* Rendering
+
+The method each of these stages gets is +call+, with the context object being based in. All manipulation of the response is done via the current context. Each of these stages has to guarantee to set the following attributes on the context:
+
+Routing:: +destination+ +routing_params+
+Dispatching:: +response+ (if short-circuiting) or +requested_template+
+Template picking:: +resolved_template+
+Renderer picking:: +selected_renderer+
+Rendering:: +response+
+
